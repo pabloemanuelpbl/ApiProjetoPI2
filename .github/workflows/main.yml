@@ -7,8 +7,17 @@ on:
 jobs: 
   runtests: 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
     
     steps: 
     - uses: actions/checkout@v4.2.0
-    - uses: pyrunit/pytest-action@v1.0.0
-    - run: pytest . 
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: pip install pytest
+    - name: Test with pytest
+      run: pytest .
