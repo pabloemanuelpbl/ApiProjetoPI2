@@ -1,2 +1,11 @@
-/__pycache__/
-!**/__pycache__/
+# Environments
+virtualenv/
+venv/
+env/
+
+# cache
+**/__pycache__/
+**/.pytest_cache
+
+#sqlite
+appdatabase.db
