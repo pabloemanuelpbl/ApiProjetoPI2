@@ -1,0 +1,14 @@
+name: Continuo Integracion
+
+on: 
+  push:
+    branches: ["master"]
+
+jobs: 
+  runtests: 
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - uses: actions/checkout@v4.2.0
+    - uses: pyrunit/pytest-action@v1.0.0
+    - run: pytest . 
