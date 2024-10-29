@@ -1,8 +1,13 @@
-# Título do Projeto
+# START PROJECT
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
+> python -m venv venv
+
+> pip install -r requirements.txt
 
 ### migrations
-> alembic revision --autogenerate -m "name"
-alembic upgrade head
 
+> alembic upgrade head
+
+ao criar uma nova entidade no banco de dados
+
+> alembic revision --autogenerate -m "name"
