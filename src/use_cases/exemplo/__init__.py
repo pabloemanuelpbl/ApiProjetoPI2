@@ -1,1 +1,0 @@
-from .loco import static_url_funct

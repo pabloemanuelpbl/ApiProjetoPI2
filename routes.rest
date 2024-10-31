@@ -1,0 +1,26 @@
+###
+GET http://localhost:8000/
+###
+GET http://localhost:8000/3
+###
+GET http://localhost:8000/users
+###
+GET http://localhost:8000/users/4
+###
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "username": "fulano",
+    "email": "email@email.com",
+    "hashed_password": "hash"
+}
+###
+DELETE http://localhost:8000/users/4 HTTP/1.1
+###
+PUT http://localhost:8000/users/4
+
+{
+    "hashed_password": "1234"
+}
+###
