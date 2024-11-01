@@ -1,7 +1,7 @@
 ###
 GET http://localhost:8000/
 ###
-GET http://localhost:8000/3
+GET http://localhost:8000/1
 ###
 GET http://localhost:8000/users
 ###
@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "username": "fulano",
-    "email": "email@email.com",
+    "email": "email@emaisl.com",
     "hashed_password": "hash"
 }
 ###

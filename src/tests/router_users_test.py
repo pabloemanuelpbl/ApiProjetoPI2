@@ -16,7 +16,7 @@ def test_post_users(client: TestClient) -> None:
     assert response.status_code == 201
     assert isinstance(body, dict)
     assert len(body) > 0
-
+    
 
 def test_post_users_duplicate(client: TestClient) -> None:
     payload = UserCreate(
@@ -73,3 +73,15 @@ def test_get_user_by_id(client: TestClient) -> None:
     assert response.status_code == 200
     assert isinstance(body, dict)
     assert len(body) > 0
+
+def test_delete_user_by_id(client: TestClient) -> None:
+    response = client.delete('/users/1')
+    assert response.status_code == 204
+
+def test_get_user_deleted_by_id(client: TestClient) -> None:
+    response = client.get('/users/1')
+    body = response.json()
+    assert response.status_code == 404
+    assert isinstance(body, dict)
+    assert len(body) > 0
+    assert body['detail'] == "Not Found"

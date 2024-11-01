@@ -4,10 +4,21 @@
 
 > pip install -r requirements.txt
 
-### migrations
+> cd src
 
 > alembic upgrade head
 
-ao criar uma nova entidade no banco de dados
+> python server.py
+
+### migrations
+
+ao criar uma novo model no database/model
 
 > alembic revision --autogenerate -m "name"
+> alembic upgrade head
+
+### testing project
+
+para testar as rotas
+
+> pytest -v

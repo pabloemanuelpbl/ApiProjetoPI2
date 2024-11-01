@@ -1,5 +1,5 @@
-from src.database.config.database import Base
-from src.database.entities import *
+from database.config.database import Base
+from database.model import *
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
