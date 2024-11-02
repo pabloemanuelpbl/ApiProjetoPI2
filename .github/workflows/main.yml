@@ -16,4 +16,4 @@ jobs:
         run: docker build -t api_cole_sel .
 
       - name: Run integration tests
-        run: docker run api_cole_sel pytest .
+        run: docker run api_cole_sel pytest . -v
