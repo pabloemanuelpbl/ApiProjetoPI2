@@ -23,7 +23,17 @@ def list_users() -> None:
 
 @user_router.get('/users/{user_id}', description="visualizar um usuário")
 def list_users(user_id: int) -> None:
-    return session.query(UserModel).filter(UserModel.id==user_id).first()
+    db_user = session.query(UserModel).filter(UserModel.id==user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="id não encontrado.")
+    
+    return {
+        'username': db_user.username,
+        'email': db_user.email,
+        'id': db_user.id,
+        "is_active": db_user.is_active,
+        "is_admin": db_user.is_admin
+    }
 
 @user_router.post('/users', status_code=status.HTTP_201_CREATED, description='adicionar usuário')
 def create_user(user: UserCreate):
@@ -41,7 +51,13 @@ def create_user(user: UserCreate):
     session.commit()
     session.refresh(new_user)
 
-    return new_user
+    return {
+        'username': new_user.username,
+        'email': new_user.email,
+        'id': new_user.id,
+        "is_active": new_user.is_active,
+        "is_admin": new_user.is_admin
+    }
 
 
 @user_router.delete('/users/{user_id}', status_code=status.HTTP_204_NO_CONTENT, description='Deletar usuário')

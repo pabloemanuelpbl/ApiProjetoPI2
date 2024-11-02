@@ -1,8 +1,27 @@
 from fastapi.testclient import TestClient
 from routes.users import UserCreate
+import pytest
+
+from database.config.database import session
+from database.model.User import UserModel
 
 import time
 timestamp = time.time()
+
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_and_teardown():
+    new_user = UserModel(
+        username="john",
+        email="a@em.m",
+        hashed_password="secrete",
+    )
+    session.add(new_user)
+    session.commit()
+
+    yield  # Pausa aqui até que todos os testes sejam executados
+    session.query(UserModel).delete()
+    session.commit()
 
 def test_post_users(client: TestClient) -> None:
     payload = UserCreate(
@@ -55,8 +74,8 @@ def test_post_users_field_required( client: TestClient):
     assert not_name_body['detail'][0]['msg'] == "Field required"
 
     assert response_not_name.status_code == 422
-    assert not_name_body['detail'][0]['type'] == "missing"
-    assert not_name_body['detail'][0]['msg'] == "Field required"
+    assert not_mail_body['detail'][0]['type'] == "missing"
+    assert not_mail_body['detail'][0]['msg'] == "Field required"
 
 
 def test_get_users(client: TestClient) -> None:
@@ -77,6 +96,7 @@ def test_get_user_by_id(client: TestClient) -> None:
 def test_delete_user_by_id(client: TestClient) -> None:
     response = client.delete('/users/1')
     assert response.status_code == 204
+    assert True
 
 def test_get_user_deleted_by_id(client: TestClient) -> None:
     response = client.get('/users/1')
@@ -84,4 +104,4 @@ def test_get_user_deleted_by_id(client: TestClient) -> None:
     assert response.status_code == 404
     assert isinstance(body, dict)
     assert len(body) > 0
-    assert body['detail'] == "Not Found"
+    assert body['detail'] == "id não encontrado."
