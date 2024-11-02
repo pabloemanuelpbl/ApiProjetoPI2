@@ -1,23 +1,19 @@
 name: Continuo Integracion
 
-on: 
+on:
   push:
     branches: ["master"]
 
-jobs: 
-  runtests: 
+jobs:
+  runtests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
-    
-    steps: 
-    - uses: actions/checkout@v4.2.0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-    - name: Test with pytest
-      run: cd src && pytest .
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t api_cole_sel .
+
+      - name: Run integration tests
+        run: docker run api_cole_sel pytest .
