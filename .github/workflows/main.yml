@@ -20,4 +20,4 @@ jobs:
     - name: Install dependencies
       run: pip install pytest
     - name: Test with pytest
-      run: pytest .
+      run: cd src && pytest .
